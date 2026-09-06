@@ -32,12 +32,12 @@ if tvBody and tvBody:IsA("Model") then
 	end
 end
 
--- 屬性
+-- set
 screenPart.Transparency = 1
 screenPart.CanCollide = true
 screenPart.Anchored = true
-
---SurfaceGui
+--fuck Roblox rendering engine 
+--SurfaceGui(set what u want here)
 local function createSurfaceGui(name, face)
 	local surfaceGui = Instance.new("SurfaceGui")
 	surfaceGui.Name = name
@@ -74,14 +74,23 @@ local currentImage = createSurfaceGui("CurrentImage", displayFace)
 local nextImage = createSurfaceGui("NextImage", displayFace)
 nextImage.Visible = true
 
---image list (put your png id here)
+--image list (put your image id here)
+--do like this
+--[[
+local imageIds = {
+	"rbxassetid://123775199919008",
+	"rbxassetid://7669757647",
+}
+]]--
 local imageIds = {
 	"rbxassetid://123775199919008",
 	"rbxassetid://7669757647",
 }
 
 warn(spawn.ID,": image list:",imageIds)
+
 -- if no image in list use default image
+
 local DEFAULT_IMAGE = "rbxassetid://16871544939"
 
 local currentIndex = 1
@@ -173,7 +182,7 @@ local function startAutoPlay()
 
 	autoPlayCoroutine = task.spawn(function()
 		while autoPlay do
-			task.wait(20) -- wait 20 seconds 
+			task.wait(20) -- wait 20 seconds (u can set how many)
 			if autoPlay and not isTransitioning then
 				nextImageFunc()
 			end
