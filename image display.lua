@@ -204,3 +204,4 @@ end
 
 task.wait(1)
 startAutoPlay()
+--some part use ai maybe have some shit here or old-data
