@@ -1,3 +1,5 @@
+--local name = script:GetAttribute("name") --dont care 
+local ID = script:GetAttribute("ID")
 local TweenService = game:GetService("TweenService")
 
 -- find screen part
@@ -15,11 +17,12 @@ if not screenPart then
 		end
 	end
 end
+
 if not screenPart then
-	error(spawn.ID,":screen part not found")
+	error("["..ID.."]screen part not found")
 	return
 else
-	print(spawn.ID,"The World")	
+	print("["..ID.."]The World")
 end
 
 -- lock all part
@@ -32,12 +35,14 @@ if tvBody and tvBody:IsA("Model") then
 	end
 end
 
--- set
+print("["..ID.."]Setup done")
+
+-- 屬性
 screenPart.Transparency = 1
 screenPart.CanCollide = true
 screenPart.Anchored = true
---fuck Roblox rendering engine 
---SurfaceGui(set what u want here)
+
+--SurfaceGui
 local function createSurfaceGui(name, face)
 	local surfaceGui = Instance.new("SurfaceGui")
 	surfaceGui.Name = name
@@ -74,24 +79,21 @@ local currentImage = createSurfaceGui("CurrentImage", displayFace)
 local nextImage = createSurfaceGui("NextImage", displayFace)
 nextImage.Visible = true
 
---image list (put your image id here)
---do like this
---[[
+--image list (put your png id here)
 local imageIds = {
+	"rbxassetid://121895023015259",
+	"rbxassetid://98670511999946",
+	"rbxassetid://99714774027157",
 	"rbxassetid://123775199919008",
-	"rbxassetid://7669757647",
-}
-]]--
-local imageIds = {
-	"rbxassetid://123775199919008",
-	"rbxassetid://7669757647",
+	"rbxassetid://7669757647"	,
 }
 
-warn(spawn.ID,": image list:",imageIds)
-
+warn("[" .. ID .. "] : image list:",imageIds)
 -- if no image in list use default image
-
+--new
 local DEFAULT_IMAGE = "rbxassetid://16871544939"
+--old
+--local DEFAULT_IMAGE = "rbxassetid://184146720"
 
 local currentIndex = 1
 local isTransitioning = false
@@ -105,7 +107,7 @@ local function transitionToImage(nextIndex)
 		currentImage.Image = DEFAULT_IMAGE
 		currentImage.ImageTransparency = 0
 		currentImage.Position = UDim2.new(0, 0, 0, 0)
-		warn(spawn.ID,":png lest is empty, display default image: " .. DEFAULT_IMAGE)
+		warn("[" .. ID .. "] : png list is empty, display default image: " .. DEFAULT_IMAGE)
 		return
 	end
 
@@ -176,13 +178,13 @@ local function startAutoPlay()
 
 	-- if only one image in list stop auto play
 	if #imageIds < 2 then
-		warn(spawn.ID,":not enough images for auto play")
+		warn("["..ID.."] : not enough images for auto play")
 		return
 	end
 
 	autoPlayCoroutine = task.spawn(function()
 		while autoPlay do
-			task.wait(20) -- wait 20 seconds (u can set how many)
+			task.wait(5) -- wait 20 seconds 
 			if autoPlay and not isTransitioning then
 				nextImageFunc()
 			end
@@ -208,9 +210,11 @@ else
 	currentImage.Image = DEFAULT_IMAGE
 	currentImage.ImageTransparency = 0
 	currentImage.Position = UDim2.new(0, 0, 0, 0)
-	warn(spawn.ID,":no images in list was found, display default image: " .. DEFAULT_IMAGE)
+	warn("[" .. ID .. "] : no images in list was found, display default image: " .. DEFAULT_IMAGE)
 end
 
 task.wait(1)
 startAutoPlay()
---some part use ai maybe have some shit here or old-data
+
+--fuck roblox updata shit https://create.roblox.com/docs/zh-tw/reference/engine/globals/RobloxGlobals?utm_source=studio&utm_content=hover_tip#delay
+
